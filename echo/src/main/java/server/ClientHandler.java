@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import shared.Log;
 import shared.ProtocolStrings;
 
 /**
@@ -63,7 +64,7 @@ public class ClientHandler implements Runnable {
                                 String[] users = msg[1].split(",");
                                 for (ClientHandler client : server.getClientHandlers()) {
                                     for (String user : users) {
-                                        if(client.getName().equals(user)){
+                                        if (client.getName().equals(user)) {
                                             client.sendMessage(ProtocolStrings.MSGRES + msg[2]);
                                         }
                                     }
@@ -77,54 +78,52 @@ public class ClientHandler implements Runnable {
                                     socket.close();
 
                                 } catch (IOException ex) {
-                                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+                                    Logger.getLogger(Log.logFileName).log(Level.INFO, "IOException caught in LogOut Case: ", ex.getMessage());
                                 }
                             }
                             break;
-                        default: { 
-                    System.out.println("    default    ");
+                        default: {
+                            System.out.println("    default    ");
+                        }
+
                     }
-                    
                 }
-                }
-                
+
             }
 
         } finally {
             try {
-               writer.println(ProtocolStrings.LOGOUT);//Echo the stop message back to the client for a nice closedown
-               socket.close();
-               server.removeHandler(this);
-               printClientList();
+                writer.println(ProtocolStrings.LOGOUT);//Echo the stop message back to the client for a nice closedown
+                socket.close();
+                server.removeHandler(this);
+                printClientList();
                 System.out.println("Closed a Connection");
             } catch (IOException ex) {
-                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Log.logFileName).log(Level.INFO, "IOException caught in Finally, when trying to close connection: " + ex.getMessage());
             }
         }
     }
-    
 
     public void sendMessage(String message) {
         System.out.println("Sending " + message);
         writer.println(message);
         writer.flush();
     }
-    
+
     public void printClientList() {
-       ArrayList<String> clientList = new ArrayList<>();
+        ArrayList<String> clientList = new ArrayList<>();
 
         for (ClientHandler c : server.getClientHandlers()) {
-            if (c.getName() != null)
+            if (c.getName() != null) {
                 clientList.add(c.getName());
+            }
         }
 
         server.sendMulticast("CLIENTLIST:" + String.join(",", clientList));
     }
-    
+
     public String getName() {
         return name;
     }
 
-    
 }
-

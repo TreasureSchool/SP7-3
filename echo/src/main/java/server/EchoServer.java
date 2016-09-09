@@ -1,22 +1,16 @@
 package server;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import shared.Log;
-import shared.ProtocolStrings;
 
 public class EchoServer {
 
@@ -37,6 +31,7 @@ public class EchoServer {
 
         System.out.println("Server started. Listening on: " + port + ", bound to: " + ip);
         try {
+
             serverSocket = new ServerSocket();
             serverSocket.bind(new InetSocketAddress(ip, port));
             do {
@@ -47,7 +42,7 @@ public class EchoServer {
                 clientHandlers.submit(clientHandler);
             } while (keepRunning);
         } catch (IOException ex) {
-            Logger.getLogger(EchoServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Log.logFileName).log(Level.INFO, "IOException caught in runServer");
         }
     }
 
@@ -69,11 +64,12 @@ public class EchoServer {
             int port = 7777;
             new EchoServer().runServer(ip, port);
         } catch (Exception e) {
+            Logger.getLogger(Log.logFileName).log(Level.INFO, "Caught exception in main method: " + e.getMessage());
             System.out.println(e.getMessage());
         }
     }
 
-   public List<ClientHandler> getClientHandlers(){
-       return clients;
-   } 
+    public List<ClientHandler> getClientHandlers() {
+        return clients;
+    }
 }

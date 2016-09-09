@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import shared.Log;
 import shared.ProtocolStrings;
 
 public class EchoClient {
@@ -67,9 +68,9 @@ public class EchoClient {
             tester.stop();
             //System.in.read();      
         } catch (UnknownHostException ex) {
-            Logger.getLogger(EchoClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Log.logFileName).log(Level.INFO, "UnkownHost Exception was caught in EchoClient.main");        
         } catch (IOException ex) {
-            Logger.getLogger(EchoClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Log.logFileName).log(Level.INFO, "IOException was caught in EchoClient.main");
         }
     }
 }
