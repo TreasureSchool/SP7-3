@@ -1,0 +1,32 @@
+<html ng-app="exerciseApp">
+    <head>
+        <title>Start Page</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.4.7/i18n/angular-locale_da.js"></script>
+        <script src="app/myApp.js" type="text/javascript"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <div ng-controller = 'MyController as myCtrl'>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td><h3>Name</h3></td>
+                    <td><h3>Gender</h3></td>
+                    <td><h3>Age</h3></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="person in myCtrl.persons | customAge">
+                    <td>{{person.name}}</td>
+                    <td>{{person.gender}}</td>
+                    <td>{{person.age}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div ng-controller = "DirectiveController">
+            <format-company></format-company>
+        </div>
+    </body>
+</html>
