@@ -1,6 +1,9 @@
 {
     "elements": {
+        "image-insertion": {},
         "format-company": {}
     },
-    "attributes": {}
+    "attributes": {
+        "image-insertion": {}
+    }
 }
